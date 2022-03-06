@@ -92,6 +92,42 @@ class FabCar extends Contract {
         return carAsBytes.toString();
     }
 
+    //Dynamic query car by - make
+    async queryCarByMake(ctx,make){
+
+        let queryString = {};
+        queryString.selector = {"make":make}
+        let iterator = await ctx.stub.getQueryResult(JSON.stringify(queryString))
+        let result = await this.getIteratorData(iterator);
+        return JSON.stringify(result);
+    }
+
+    async getIteratorData (iterator){
+        let resultArray =[];
+
+        while(true){
+            let res = await iterator.next();
+
+            //res.value -- contains other metadata
+            //res.value.value -- contains the actual value
+            //res.value.key -- contains the key
+
+            let resJson ={}
+            if(res.value&&res.value.value.toString()){
+                resJson.key = res.value.key;
+                resJson.value = JSON.parse(res.value.value.toString());
+                resultArray.push(resJson);
+            }
+
+            if(res.done){
+                iterator.close();
+                return resultArray;
+            }
+        }
+    }
+
+
+
     async createCar(ctx, carNumber, make, model, color, owner) {
         console.info('============= START : Create Car ===========');
 
