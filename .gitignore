@@ -26,4 +26,4 @@ external-chaincode/
 .settings
 
 #wallets
-.id
+*.id
