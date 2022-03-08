@@ -44,7 +44,8 @@ async function main() {
         // queryCar transaction - requires 1 argument, ex: ('queryCar', 'CAR4')
         // queryAllCars transaction - requires no arguments, ex: ('queryAllCars')
         // queryCarByMake transaction - requires 1 argument, ex: ('queryCarByMake', 'Ford')
-        const result = await contract.evaluateTransaction('queryCarByMake','Ford');
+        // getAssetHistory transaction - requires 1 argument, ex: ('getAssetHistory','CAR1')
+        const result = await contract.evaluateTransaction('getAssetHistory', 'CAR1');
         console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
 
         // Disconnect from the gateway.
